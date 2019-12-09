@@ -23,7 +23,7 @@ class ManageView:
                 - size and location
                 - minimum size"""
         self.root.title("Application Pur Beurre")
-        self.root.geometry("450x600-20+20")
+        self.root.geometry("450x620-20+20")
         self.root.minsize(450, 600)
         self.root['bg'] = 'white'
 
@@ -63,8 +63,8 @@ class ManageView:
         return label
 
     @staticmethod
-    def create_entry(master, font=("Arial", 8), bg="white", fg='black',
-                     row=0, col=0, sticky='w', padx=0, pady=0):
+    def create_entry(master, font=("Arial", 15), bg="#E5E3E3", fg='black',
+                     row=0, col=0, sticky='e', padx=2, pady=5):
         """ This method creates a tkinter entry widget
             :param master: Tk (the parent window)
             :param font: tuple (font: String, size_font: Integer)
@@ -158,3 +158,20 @@ class ManageView:
                       height=20)
         line.create_line((10, 10), (400, 10), fill="#ADD0EC", width=2)
         line.grid(row=row, sticky='w')
+
+    @staticmethod
+    def create_canvas(master, bg="white", width=100, height=100,
+                      row=0, col=0, sticky='ns', padx=0, pady=0):
+        """ This method creates a tkinter canvas widget
+            :param master: Tk (the parent window)
+            :param bg: String (background color)
+            :param width: Integer (width in number of characters)
+            :param height: Integer (height in number of lines)
+            :param row: Integer (line number where the text will be placed)
+            :param col: Integer (column number where the label will be placed)
+            :param sticky: String (placement in the cell)
+            :param padx: Int (horizontal outer margin)
+            :param pady: Int (vertical outer margin)"""
+        canvas = Canvas(master, bg=bg, width=width, height=height)
+        canvas.grid(row=row, column=col, sticky=sticky, padx=padx, pady=pady)
+        return canvas

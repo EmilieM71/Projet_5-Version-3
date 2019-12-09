@@ -16,4 +16,10 @@ class ControllerStart:
         self.view.open_view_start()
 
     def shows_steps_view(self):
-        pass
+        self.controller.cont_steps.shows_steps_view()
+
+    def show_start_view_user(self):
+        self.view.show_start_view_user()
+
+    def create_db(self):
+        self.view.create_db()

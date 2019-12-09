@@ -1,3 +1,6 @@
+from tkinter import PhotoImage, Scrollbar
+
+
 class ViewStart:
     """ This class is responsible for:
         - create the widgets in the view
@@ -135,3 +138,47 @@ class ViewStart:
         """ This method opens the view """
         self.create_frame_start()
         self.create_widgets()
+
+    def show_start_view_user(self):
+        self.create_frame_start()
+        self.widgets = []
+        self.create_widgets()
+        self.user_click_on_ok1_button()
+
+    def db_is_create(self):
+        self.manage_view.root.geometry("450x620-20+20")
+        self.user_click_on_launch_button()
+
+    def create_db(self):
+        # self.manage_view.root.geometry("1200x700-5+5")
+        # frame
+        frame = self.manage_view.create_frame(self.manage_view.root,
+                                              padx=5, pady=5)
+        # title in frame
+        self.manage_view.create_label(frame, font=("Arial", 14),
+                                      text="CREATION DE LA BASE DE DONNEES",
+                                      fg="#ADD0EC", sticky='ns', pady=5)
+        global photo
+        photo = PhotoImage(file="resource/Images/mdp.gif")
+        # y_scrollbar = Scrollbar(frame, orient='vertical')
+        x_scrollbar = Scrollbar(frame, orient='horizontal')
+        can = self.manage_view.create_canvas(frame, bg='blue',
+                                             width=1400,
+                                             height=632, row=1)
+        can.config(scrollregion=(0, 0, photo.width()-150, photo.height()-120))
+        can.create_image(-150, -120, anchor='nw', image=photo)
+        x_scrollbar.config()
+        # y_scrollbar.config(command=can.yview)
+        x_scrollbar.config(command=can.xview)
+        # y_scrollbar.grid(row=1, column=1, sticky='ns')
+        x_scrollbar.grid(row=2, column=0, sticky='ew')
+
+        # can['xscrollcommand'] = x_scrollbar.delta(100, 0)
+        can['xscrollcommand'] = x_scrollbar.set
+        # can['yscrollcommand'] = y_scrollbar.set
+
+        self.manage_view.create_button(frame,
+                                       "Base de données 'PurBeurre' créée",
+                                       command=self.db_is_create,
+                                       font=("Ariel", 14), row=3)
+        self.manage_view.root.geometry("{}x{}-5+5".format(int(photo.width()-400), int(photo.height())))
