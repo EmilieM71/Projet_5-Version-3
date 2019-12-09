@@ -29,11 +29,9 @@ class ManageDb:
         data_api = ApiOpenFoodFacts()  # Data from api
 
         # Recover openFoodFacts API data
-        data_api.import_products(cat)
-        data_api.clean_data(data_api.products)
-        self.products.append(data_api.all_products)
-
-        return self.products
+        products = data_api.import_products(cat)
+        all_products = data_api.clean_data(products)
+        return all_products
 
     def insert_data_in_tables(self, products):
         # # Creating a cursor object
@@ -51,7 +49,9 @@ class ManageDb:
         # Insert data into the corresponding tables
 
         for product in products:
-            if product[0] == "" or product[1] == "" or product[1] is None:
+            # id_food, name, categories, store, brand, nutriscore, url
+            if product[0] == "" or product[1] == "" or product[1] is None or (
+                    product[5] == "" or product[5] is None):
                 return
             else:
                 # Insert elements in food table
@@ -73,10 +73,10 @@ class ManageDb:
                             id_food, id_cat)
                     else:
                         for cat in product[2].split(","):
-                            # Search if the brand already exists in  database
+                            # Search if the brand already exists in db
                             # and if not exist, insert name in table brand
                             id_cat = cat_table.create_category(cat)
-                            # Insert id_food and id_brand in food_brand table
+                            # Insert id_food, id_brand in food_brand table
                             cat_food_table.search_if_cat_food_exist(
                                 id_food, id_cat)
                 # Insert brand in brand table

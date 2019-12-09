@@ -22,13 +22,13 @@ class ControllerUser:
         self.controller.info_user = (id_user, pseudo2)
         self.controller.cont_cat.show_select_cat_view()
 
-    def search_if_pseudo_exist(self, pseudo2):
-        pass
+    def search_if_pseudo_exist(self, pseudo):
+        pseudo = self.model.search_if_pseudo_exist(pseudo)
+        self.controller.pseudo = pseudo
 
-    def verify_if_user_exists(self, pseudo, password):
-        id_user = self.model.search_if_user_exist(pseudo, password)
-        self.controller.info_user = (id_user, pseudo)
-        return self.controller.info_user
+    def search_if_user_exist(self, pseudo, password):
+        pseudo = self.model.search_if_user_exist(pseudo, password)
+        return pseudo
 
-    def select_cat(self):
-        self.controller.cont_cat.show_select_cat_view()
+    def choice_welcome(self):
+        self.controller.cont_welcome.show_welcome_view(self.controller.pseudo)

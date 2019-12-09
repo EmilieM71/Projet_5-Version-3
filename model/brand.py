@@ -24,7 +24,7 @@ class Brand:
         data_brand = (name_brand,)
         # 1.3- Insert new category
         self.cursor.execute(add_brand, data_brand)
-        self.brand_id = self.cursor.lastrowid
+        self.brand_id = self.get_id(name_brand)
         # 1.4- Make sure data is committed
         self.cnx.commit()
         return self.brand_id
@@ -41,6 +41,7 @@ class Brand:
         else:
             for row in rows:
                 self.brand_id = row[0]
+        return self.brand_id
 
     def search_if_brand_exist(self, name_brand):
         """ This function search if the brand already exists in database"""

@@ -155,8 +155,7 @@ class ViewSteps:
             can.itemconfig(arrow_under_rect_create_db, fill='green', width=4)
             can.itemconfig(polygon_3, outline='green', width=4)
             # Creating database 'Pur_Beurre'
-            # create_db = self.controller.create_db(can)
-            create_db = False
+            create_db = self.controller.create_db()
             if create_db:
                 # Shows the steps in green on the flow diagram
                 can.itemconfig(arrow_yes_3, fill='green', width=4)
@@ -184,8 +183,8 @@ class ViewSteps:
         self.controller.login()
 
     def user_click_on_download_button(self):
-        self.frame_steps.destroy()
         self.controller.download_data()
+        self.frame_steps.destroy()
 
     def create_widgets_presence_data(self, can, presence_data):
         arrow_yes_4 = can.create_line((160, 440), (175, 440), arrow='first')

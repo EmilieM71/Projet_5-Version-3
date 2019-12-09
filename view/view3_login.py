@@ -42,8 +42,8 @@ class ViewLogin:
         password = self.e_password_login.get()
         password_encryption = self.password_encryption(password)
 
-        info_user = self.controller.verify_if_user_exists(pseudo,
-                                                          password_encryption)
+        info_user = self.controller.search_if_user_exist(pseudo,
+                                                         password_encryption)
         # If the user does not exists: displays a message indicating that the
         # user does not exists (to log in or create an account)
         if not info_user:
@@ -55,7 +55,7 @@ class ViewLogin:
 
         # Else (user exist)  open view pur Beurre welcome
         else:
-            self.controller.select_cat()
+            self.controller.choice_welcome()
 
     @staticmethod
     def checks_email(email):
@@ -149,7 +149,7 @@ class ViewLogin:
         # create Entry Pseudo
         self.e_password_login = self.manage_view.create_entry(self.frame_login,
                                                               row=4)
-        self.e_password_login.confif(show='*')
+        self.e_password_login.config(show='*')
 
         # create button LOG IN
         self.manage_view.create_button(
@@ -184,7 +184,7 @@ class ViewLogin:
         # create Entry Pseudo
         self.e_password2 = self.manage_view.create_entry(self.frame_login,
                                                          row=10)
-        self.e_password2.confif(show='*')
+        self.e_password2.config(show='*')
 
         # create button info password
         self.info_password = self.manage_view.create_button(

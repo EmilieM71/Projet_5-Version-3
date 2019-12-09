@@ -48,6 +48,7 @@ class ControllerSteps:
 
     def download_data(self):
         for cat in CATEGORY:
+            print(cat)
             products = self.model.download_api_data(cat)
             self.model.insert_data_in_tables(products)
             self.login()
