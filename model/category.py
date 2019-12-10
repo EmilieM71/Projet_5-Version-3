@@ -49,6 +49,7 @@ class Category:
             return self.name
 
     def get_id(self, name_cat):
+        self.cursor = self.cnx.cursor()
         # Storage of the SELECT statement (SQL) in a variable
         query = ("SELECT id FROM category "
                  "WHERE name = %s")

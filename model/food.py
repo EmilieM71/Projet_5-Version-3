@@ -99,17 +99,19 @@ class Food:
 
     def get_id(self, name_food):
         # Storage of the SELECT statement (SQL) in a variable
+        cursor = self.cnx.cursor()
         query = ("SELECT id FROM food "
                  "WHERE name = %s")
         # Execute SELECT statement (SQL)
-        self.cursor.execute(query, (name_food,))
-        rows = self.cursor.fetchall()
+        cursor.execute(query, (name_food,))
+        rows = cursor.fetchall()
         if not rows:
             return
         else:
             for row in rows:
                 self.id_food = str(row[0])
-                return self.id_food
+        cursor.close()
+        return self.id_food
 
     def search_if_food_exist(self, code):
         """ This function search if the food already exists in the database"""
@@ -138,15 +140,82 @@ class Food:
 
         return list_name_food
 
-    def substitute_research(self, list_id_food):
+    def substitute_research(self, list_name_food):
+        cursor = self.cnx.cursor()
         list_substitute = []
-        for id_food in list_id_food:
+        for name_food in list_name_food:
             # Storage of the SELECT statement (SQL) in a variable
             query = ("SELECT * FROM food "
-                     "WHERE id = %s and nutriscore = 'a'")
+                     "WHERE name = %s and nutriscore = 'a' ")
             # Execute SELECT statement (SQL)
-            self.cursor.execute(query, (id_food,))
-            rows = self.cursor.fetchall()
+            cursor.execute(query, (name_food,))
+            rows = cursor.fetchall()
             if rows:
                 list_substitute.append(rows)
+        cursor.close()
         return list_substitute
+
+    def recover_food_name_list(self, id_cat):
+        # Storage of the SELECT statement (SQL) in a variable
+        cursor = self.cnx.cursor()
+        query = ("SELECT name FROM food "
+                 "INNER JOIN category_food "
+                 "ON food.id = category_food.id_food "
+                 "WHERE category_food.id_category = %s")
+        # Execute SELECT statement (SQL)
+        cursor.execute(query, (id_cat,))
+        rows = cursor.fetchall()
+        list_food = []
+        if rows:
+            for row in rows:
+                food = row[0]
+                list_food.append(food)
+        cursor.close()
+        return list_food
+
+    def recover_info_food(self, id_food):
+        # Storage of the SELECT statement (SQL) in a variable
+        cursor = self.cnx.cursor()
+        query = ("SELECT * FROM food "
+                 "WHERE id = %s")
+        # Execute SELECT statement (SQL)
+        cursor.execute(query, (id_food,))
+        rows = cursor.fetchall()
+        info_food = rows[0]
+        return info_food
+
+    def recover_id_cat_list(self, id_food):
+        # Storage of the SELECT statement (SQL) in a variable
+        cursor = self.cnx.cursor()
+        query = ("SELECT id_category FROM category_food "
+                 "WHERE id_food = %s")
+        # Execute SELECT statement (SQL)
+        cursor.execute(query, (id_food,))
+        rows = cursor.fetchall()
+        list_id_cat = []
+        if rows:
+            for row in rows:
+                id_cat = row[0]
+                list_id_cat.append(id_cat)
+        cursor.close()
+        return list_id_cat
+
+    def save_reserch(self, pseudo, id_food, id_sub):
+        cursor = self.cnx.cursor()
+        # 1- Create a line in the food table
+        # 1.1- Storage of the INSERT statement (SQL) in a variable
+        add_food = ("INSERT INTO user_food_substitute "
+                    "(id_food, id_substitute, pseudo)"
+                    "VALUES (%s, %s, %s)")
+        # 1.2- Storage data in a variable
+        data_food = (id_food, name_food, nutriscore_food, url_food,
+                     ingredient, palm_oil, allergen, energy_100g, energy,
+                     fat_100g, saturated_fat_100g, carbohydrates_100g,
+                     sugars_100g, proteins_100g, salt_100g, sodium_100g,
+                     nutrition_score_fr_100g, nova_group_100g)
+
+        # 1.3- Insert new category
+        self.cursor.execute(add_food, data_food)
+
+        self.id_food = self.cursor.lastrowid
+        self.cnx.commit()

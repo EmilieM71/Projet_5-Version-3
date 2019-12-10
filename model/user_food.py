@@ -39,17 +39,19 @@ class UserFood:
 
     def search_if_research_exist(self, user_id, food_id, substitute_id):
         """ This function search if the food already exists in the database"""
-
+        print(self.cnx)
+        cursor = self.cnx.cursor()
         # Storage of the SELECT statement (SQL) in a variable
         query = ("SELECT * FROM user_food_substitute "
                  "WHERE id_user = %s and id_food = %s and id_substitute = %s")
         # Execute SELECT statement (SQL)
-        self.cursor.execute(query, (user_id, food_id, substitute_id))
-        rows = self.cursor.fetchall()
+        cursor.execute(query, (user_id, food_id, substitute_id))
+        rows = cursor.fetchall()
         if not rows:
             self.create_user_food_substitute(user_id, food_id, substitute_id)
             return
         else:
+            cursor.close()
             return rows[0]
 
     def search_data_in_table_for_user(self, id_user):

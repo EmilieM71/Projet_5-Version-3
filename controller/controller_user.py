@@ -13,6 +13,7 @@ class ControllerUser:
         self.controller = cont
         self.model = User(cont.cnx, self)
         self.view = ViewLogin(self)
+        self.pseudo = None
 
     def show_user_view(self):
         self.view.open_view_login()
@@ -24,11 +25,13 @@ class ControllerUser:
 
     def search_if_pseudo_exist(self, pseudo):
         pseudo = self.model.search_if_pseudo_exist(pseudo)
-        self.controller.pseudo = pseudo
+        self.pseudo = pseudo
 
     def search_if_user_exist(self, pseudo, password):
-        pseudo = self.model.search_if_user_exist(pseudo, password)
-        return pseudo
+        self.pseudo = self.model.search_if_user_exist(pseudo, password)
+        self.controller.pseudo = self.pseudo
+        return self.pseudo
 
     def choice_welcome(self):
-        self.controller.cont_welcome.show_welcome_view(self.controller.pseudo)
+        self.controller.cont_welcome.show_welcome_view(self.pseudo)
+        self.controller.pseudo = self.pseudo

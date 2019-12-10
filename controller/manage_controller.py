@@ -4,6 +4,7 @@ from controller.controller_steps import ControllerSteps
 from controller.controller_user import ControllerUser
 from controller.controller_welcome import ControllerWelcome
 from controller.controller_cat import ControllerCat
+from controller.controller_food import ControllerFood
 
 
 class ManageController:
@@ -27,6 +28,7 @@ class ManageController:
         self._cont_user = None
         self._cont_welcome = None
         self._cont_cat = None
+        self._cont_food = None
 
     def starting(self):
         self.view.create_root()
@@ -108,3 +110,20 @@ class ManageController:
 
     # Property of the cont_cat attribute
     cont_cat = property(_get_cont_cat, _set_cont_cat)
+
+    # ___Methods and property of the 'cont_food' attribute___ #
+    def _get_cont_food(self):
+        """ The method called to access the 'cont_food' attribute. If it has
+        no value, an instance of the ControllerCat class is created, and then
+        it is assigned that object """
+        if self._cont_food is None:
+            import_class = ControllerFood(self)
+            self._set_cont_food(import_class)
+        return self._cont_food
+
+    def _set_cont_food(self, new_value):
+        """ Method called to change the value of the 'cont_food' attribute """
+        self._cont_food = new_value
+
+    # Property of the cont_food attribute
+    cont_food = property(_get_cont_food, _set_cont_food)

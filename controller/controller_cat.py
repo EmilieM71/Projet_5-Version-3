@@ -16,7 +16,7 @@ class ControllerCat:
 
     def show_select_cat_view(self, pseudo):
         self.controller.pseudo = pseudo
-        self.view.open_view_select_cat()
+        self.view.open_view_select_cat(pseudo)
 
     def back_to_the_menu(self):
         self.controller.cont_welcome.show_welcome_view(self.controller.pseudo)
