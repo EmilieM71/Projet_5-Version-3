@@ -1,13 +1,13 @@
 from tkinter import messagebox
+from view.manage_view import ManageView
 import re
 import hashlib
 
 
-class ViewLogin:
+class ViewLogin(ManageView):
 
     def __init__(self, cont):
         self.controller = cont
-        self.manage_view = cont.controller.view
         self.frame_login = None
         # Entry for login
         self.message = None
@@ -22,8 +22,7 @@ class ViewLogin:
 
     def create_frame_login(self):
         """ This method creates a frame in the window """
-        self.frame_login = self.manage_view.create_frame(self.manage_view.root,
-                                                         padx=5)
+        self.frame_login = self.create_frame(self.root, padx=5)
 
     @staticmethod
     def b_info_password():
@@ -121,86 +120,80 @@ class ViewLogin:
     def create_widgets(self):
         """ This method creates the widgets that will be in the frame. """
         # title
-        self.manage_view.create_label(self.frame_login, text=" SE CONNECTER",
-                                      font=("Arial", 12), fg="#ADD0EC",
-                                      sticky='ns')
-        self.manage_view.create_line(self.frame_login, 1)  # create line
+        self.create_label(self.frame_login, text=" SE CONNECTER",
+                          font=("Arial", 12), fg="#ADD0EC", sticky='ns')
+        self.create_line(self.frame_login, 1)  # create line
 
         # message
         # label : master, text="text", font=("Arial", 8), bg="white",
         # fg='black', row=0, col=0, sticky='w', padx=0, pady=0
-        self.message = self.manage_view.create_label(
+        self.message = self.create_label(
             self.frame_login, text=None, font=("Arial", 15), row=2,
             sticky='ns', padx=20, pady=5)
         # create label Pseudo
-        self.manage_view.create_label(
-            self.frame_login, text=" Pseudo : ", font=("Arial", 15),
-            row=3, sticky='w', padx=20, pady=5)
+        self.create_label(self.frame_login, text=" Pseudo : ", padx=20, pady=5,
+                          font=("Arial", 15), row=3, sticky='w')
 
         # create Entry Pseudo
-        self.e_pseudo_login = self.manage_view.create_entry(self.frame_login,
-                                                            row=3)
+        self.e_pseudo_login = self.create_entry(self.frame_login, row=3)
 
         # create label Password
-        self.manage_view.create_label(
-            self.frame_login, text=" Mot de passe : ", font=("Arial", 15),
-            row=4, sticky='w', padx=20, pady=5)
+        self.create_label(self.frame_login, text=" Mot de passe : ", pady=5,
+                          font=("Arial", 15), row=4, sticky='w', padx=20)
 
         # create Entry Pseudo
-        self.e_password_login = self.manage_view.create_entry(self.frame_login,
-                                                              row=4)
+        self.e_password_login = self.create_entry(self.frame_login, row=4)
         self.e_password_login.config(show='*')
 
         # create button LOG IN
-        self.manage_view.create_button(
-            self.frame_login, "Se connecter", self.function_b_login,
-            font=("Arial", 15), row=5, padx=15, pady=15)
+        self.create_button(self.frame_login, "Se connecter",
+                           self.function_b_login, font=("Arial", 15), row=5,
+                           padx=15, pady=15)
 
-        self.manage_view.create_line(self.frame_login, 6)  # create line
+        self.create_line(self.frame_login, 6)  # create line
 
         # create label New user
-        self.manage_view.create_label(
+        self.create_label(
             self.frame_login, text=" Nouvel utilisateur ", font=("Arial", 12),
             fg="#ADD0EC", row=7, sticky='ns')
 
         # message: this pseudo already exists, choose another pseudo
-        self.message2 = self.manage_view.create_label(
+        self.message2 = self.create_label(
             self.frame_login, text=None, font=("Arial", 15), row=8,
             sticky='ns', padx=20, pady=5)
 
         # create label Pseudo
-        self.manage_view.create_label(
+        self.create_label(
             self.frame_login, text=" Pseudo : ", font=("Arial", 15),
             row=9, sticky='w', padx=20, pady=5)
 
         # create Entry Pseudo
-        self.e_pseudo2 = self.manage_view.create_entry(self.frame_login, row=9)
+        self.e_pseudo2 = self.create_entry(self.frame_login, row=9)
 
         # create label Password
-        self.manage_view.create_label(
+        self.create_label(
             self.frame_login, text=" Mot de passe : ", font=("Arial", 15),
             row=10, sticky='w', padx=20, pady=5)
 
         # create Entry Pseudo
-        self.e_password2 = self.manage_view.create_entry(self.frame_login,
-                                                         row=10)
+        self.e_password2 = self.create_entry(self.frame_login, row=10)
         self.e_password2.config(show='*')
 
         # create button info password
-        self.info_password = self.manage_view.create_button(
+        self.info_password = self.create_button(
             self.frame_login, " ? ", self.b_info_password, font=("Arial", 8),
             bg='gray', row=10, sticky='e')
 
         # create label Password
-        self.manage_view.create_label(
+        self.create_label(
             self.frame_login, text=" Email : ", font=("Arial", 15),
             row=11, sticky='w', padx=20, pady=5)
 
         # create Entry Pseudo
-        self.e_email = self.manage_view.create_entry(self.frame_login, row=11)
+        self.e_email = self.create_entry(self.frame_login, row=11)
 
         # create button create an account
-        self.manage_view.create_button(
+        self.create_button(
             self.frame_login, "Créer un compte", self.b_create_account,
             font=("Arial", 15), row=12, padx=15, pady=15)
 

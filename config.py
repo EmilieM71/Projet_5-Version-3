@@ -5,15 +5,24 @@ PASSWORD = '123abc'
 DB_NAME = 'PurBeurre'
 
 # path file MPD.sql
-PATH_FILE = "resource/MPD.sql"
+PATH_FILE_DB = "resource/MPD.sql"
 
 CATEGORY = ['Snacks', 'Boissons', 'Produits laitiers', 'Viandes',
-            'Plats préparés', 'Céréales et pommes de terre', 'Charcuteries',
-            'Petit-déjeuners', 'Epicerie', 'Fromages', 'Céréales et dérivés',
-            'Fruits et produits dérivés', 'Desserts', 'Sauces',
-            'Produits de la mer', 'Surgelés', 'Conserves', 'Confiseries',
-            'Légumes et dérivés', 'Biscuits', 'Poissons', 'Matières grasses',
-            'Frais', 'Pains']
+            'Plats préparés', 'Petit-déjeuners', 'Céréales et dérivés',
+            'Légumes et dérivés', 'Poissons', 'Frais']
+
+SEARCH_TERMS_WITH_JOIN = {
+    'SELECT': {'table1.col1': 'table1.col1',  # exit data
+               'table1': 'table1'},  # table 1
+    'INNER JOIN': {'table2': 'table2'},  # table 1
+    'ON': {'table1.col2': 'table1.col2',  # join col table 1
+           'table2.col1': 'table2.col1'},   # join col table 2
+    'WHERE': {'table2.col2': 'table2.col2'}}  # Entry data (condition)
+
+SEARCH_TERMS = {
+    'SELECT': {'col1': 'col1',  # exit data
+               'table1': 'table1'},  # table 1
+    'WHERE': {'col2': 'col2'}}  # Entry data (condition)
 
 ARRAY_LINE_REF = ["Pas de widgets text",  # 0
                   "Code OpenFoodFacts",  # 1

@@ -1,13 +1,14 @@
 from config import ARRAY_LINE_REF
+from view.manage_view import ManageView
 from tkinter import scrolledtext, Text, INSERT
 import webbrowser
 
 
-class ViewSelectFood:
+class ViewSelectFood(ManageView):
 
     def __init__(self, cont):
         self.controller = cont
-        self.manage_view = cont.controller.view
+
         self.list_food = None
         self.frame_food = None
         self.combo_food = None
@@ -25,8 +26,7 @@ class ViewSelectFood:
 
     def create_frame_cat(self):
         """ This method creates a frame in the window """
-        self.frame_food = self.manage_view.create_frame(
-            self.manage_view.root, padx=5)
+        self.frame_food = self.create_frame(self.root, padx=5)
 
     def back_to_the_menu(self):
         self.controller.back_to_the_menu()
@@ -86,8 +86,7 @@ class ViewSelectFood:
             list_data_col.append(list_info_sub)
         if self.frame_info is not None:
             self.frame_info.destroy()
-        self.frame_info = self.manage_view.create_frame(
-            self.frame_food, padx=10, pady=10)
+        self.frame_info = self.create_frame(self.frame_food, padx=10, pady=10)
 
         for col_number, element in enumerate(list_data_col):
             for line_number, item in enumerate(element):
@@ -99,6 +98,7 @@ class ViewSelectFood:
                     self.frame_info, bg="white", bd=2, font=("Arial", 8),
                     fg='black', width=57, height=1, wrap='word')
                 cell_s.tag_config(1)
+
                 cell = Text(self.frame_info, bg="white", bd=2,
                             font=("Arial", 8), fg='black', width=60,
                             height=1, wrap='word')
@@ -211,12 +211,13 @@ class ViewSelectFood:
             # Insert brand in list_info_sub
             self.recovers_brand(info_sub[0], list_info_sub)
         # display_food_information in an array
-        self.manage_view.root.geometry("1400x620-20+20")
+        self.root.geometry("1400x620-20+20")
         self.display_food_information_in_array(list_info_food, list_info_sub)
 
     def save_research(self):
         # back to the controller
         self.controller.save_research(self.info_food, self.info_sub)
+        self.root.geometry("450x620-20+20")
         self.back_to_the_menu()
 
     def see_choice_user_sub(self, event):
@@ -227,10 +228,8 @@ class ViewSelectFood:
         self.info_sub = self.controller.recover_info_food(id_food)
         self.create_news_widgets(self.info_food, self.info_sub)
         # Create Button Save
-        self.manage_view.create_button(self.frame_food, "Enregistrer",
-                                       self.save_research,
-                                       font=("Arial", 15), row=11,
-                                       sticky='e', pady=20)
+        self.create_button(self.frame_food, "Enregistrer", self.save_research,
+                           font=("Arial", 15), row=11, sticky='e', pady=20)
         return self.selected_sub
 
     def see_choice_user_food(self, event):
@@ -240,19 +239,22 @@ class ViewSelectFood:
         id_food = self.controller.displays_food_information(
             selected_food)
         self.info_food = self.controller.recover_info_food(id_food)
+        print(self.info_food)
         self.create_news_widgets(self.info_food, info_sub=None)
         # display widgets for select substitute
-        self.manage_view.create_line(self.frame_food, 7)  # create line
+        self.create_line(self.frame_food, 7)  # create line
         #   create label : Select a substitute
-        self.label_select_sub = self.manage_view.create_label(
+        self.label_select_sub = self.create_label(
             self.frame_food, text=" Selectionner un substitue: : ",
             fg='#ADD0EC', row=8, pady=5)
 
-        list_sub = self.controller.substitute_research(self.list_food)
+        list_sub = self.controller.substitute_research(
+            nutriscore=self.info_food[2], score_nutri=self.info_food[16],
+            nova=self.info_food[17])
         for substitute in list_sub:
-            self.list_sub.append(substitute[0][1])
+            self.list_sub.append(substitute[1])
         # Create combobox substitute
-        self.combo_sub = self.manage_view.create_combobox(
+        self.combo_sub = self.create_combobox(
             self.frame_food, self.list_sub, self.see_choice_user_sub,
             row=9, sticky='w', padx=20)
 
@@ -261,46 +263,38 @@ class ViewSelectFood:
         self.list_food = list_food
         # title line 1
         title_text = " BIENVENUE {} ".format(self.controller.controller.pseudo)
-        self.manage_view.create_label(self.frame_food, text=title_text,
-                                      font=("Arial", 15), fg="#ADD0EC",
-                                      sticky='ns', pady=5)
+        self.create_label(self.frame_food, text=title_text, font=("Arial", 15),
+                          fg="#ADD0EC", sticky='ns', pady=5)
 
         # create title line 2
-        self.manage_view.create_label(self.frame_food,
-                                      text="RECHERCHE D'UN SUBSTITUE",
-                                      font=("Arial", 15), fg="#ADD0EC",
-                                      row=1, pady=2)
+        self.create_label(self.frame_food, text="RECHERCHE D'UN SUBSTITUE",
+                          font=("Arial", 15), fg="#ADD0EC", row=1, pady=2)
 
         # Create Button Back to the menu
-        self.manage_view.create_button(self.frame_food, "MENU",
-                                       self.back_to_the_menu,
-                                       font=("Arial", 14), row=1,
-                                       sticky='e', pady=20)
+        self.create_button(self.frame_food, "MENU", self.back_to_the_menu,
+                           font=("Arial", 14), row=1, sticky='e', pady=20)
 
-        self.manage_view.create_line(self.frame_food, 2)  # create line
+        self.create_line(self.frame_food, 2)  # create line
 
         # create label category
         text_cat = " Catégorie : {}".format(cat)
         # label = master, text="text", font=("Arial", 8), bg="white",
         #         fg='black', row=0, col=0, sticky='w', padx=0, pady=0
-        self.manage_view.create_label(self.frame_food, text=text_cat,
-                                      font=("Arial", 15), fg="gray",
-                                      row=3, pady=5)
+        self.create_label(self.frame_food, text=text_cat, font=("Arial", 15),
+                          fg="gray", row=3, pady=5)
 
         # Create Button modified category
-        self.manage_view.create_button(self.frame_food,
-                                       "Modifier la catégorie",
-                                       self.back_choice_cat,
-                                       font=("Arial", 12), row=4,
-                                       sticky='w', pady=0)
+        self.create_button(self.frame_food, "Modifier la catégorie",
+                           self.back_choice_cat, font=("Arial", 12), row=4,
+                           sticky='w', pady=0)
 
         # create subtitle : Select a food
-        self.label_select_food = self.manage_view.create_label(
+        self.label_select_food = self.create_label(
             self.frame_food, text="Sélectionner un aliment : ", fg='#ADD0EC',
             row=5, pady=20)
 
         # Create combobox food
-        self.combo_food = self.manage_view.create_combobox(
+        self.combo_food = self.create_combobox(
             self.frame_food, list_food, self.see_choice_user_food,
             row=6, sticky='w', padx=20)
 

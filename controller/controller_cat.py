@@ -1,4 +1,4 @@
-from model.category import Category
+from model.tables_db.category_manager import CategoryManager
 from view.view5_select_cat import ViewSelectCat
 
 
@@ -11,8 +11,9 @@ class ControllerCat:
         :param cont: ManageController
         """
         self.controller = cont
-        self.model = Category(cont.cnx, self)
+        self.model = CategoryManager(cont.cnx)
         self.view = ViewSelectCat(self)
+        self.info_cat = None
 
     def show_select_cat_view(self, pseudo):
         self.controller.pseudo = pseudo
@@ -23,6 +24,8 @@ class ControllerCat:
 
     def get_id_selected_category(self, cat):
         id_cat = self.model.get_id(cat)
-        self.controller.info_cat = (id_cat, cat)
-        self.controller.cont_food.show_select_food(self.controller.pseudo,
-                                                   self.controller.info_cat)
+        self.info_cat = (id_cat, cat)
+        self.controller.selected_category = self.info_cat
+        self.controller.cont_food.show_select_food(
+            self.controller.info_user, self.info_cat)
+

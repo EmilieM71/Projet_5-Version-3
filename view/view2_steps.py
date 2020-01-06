@@ -1,36 +1,38 @@
 from tkinter import messagebox
+from view.manage_view import ManageView
 
 
-class ViewSteps:
+class ViewSteps(ManageView):
 
     def __init__(self, cont):
         self.controller = cont
-        self.manage_view = cont.controller.view
         self.frame_steps = None
         self.can = None
 
     def create_frame_steps(self):
         """ This method creates a frame in the window """
-        self.frame_steps = self.manage_view.create_frame(self.manage_view.root,
-                                                         padx=5)
+        self.frame_steps = self.create_frame(self.root, padx=5)
 
     def create_widgets(self):
         """ This method creates the widgets that will be in the frame. """
         # title
         text_title = " ETAPES DE LANCEMENT DE L'APPLICATION "
-        self.manage_view.create_label(self.frame_steps, text=text_title,
-                                      font=("Arial", 12), fg="#ADD0EC",
-                                      sticky='ns')
-        self.manage_view.create_line(self.frame_steps, 1)  # create line
+        self.create_label(self.frame_steps, text=text_title,
+                          font=("Arial", 12), fg="#ADD0EC", sticky='ns')
+        self.create_line(self.frame_steps, 1)  # create line
 
         # create canvas
-        can = self.manage_view.create_canvas(self.frame_steps, width=430,
-                                             height=500, row=2)
+        can = self.create_canvas(self.frame_steps, width=430, height=500,
+                                 row=2)
+        # canvas, x0=0, y0=0, x1=10, y1=10, w=1, color_line='black', text=""
+        self.canvas_create_rect_with_text(
+            can, x0=175, y0=10, x1=325, y1=30, w=4, color_line='green',
+            text=" Lancement de l'application ")
+        # Center of the rectangle 1
+        self.canvas_create_line(
+            can, x0=250, y0=30, x1=250, y1=45, fill='green', arrow='last',
+            width=4)
 
-        can.create_rectangle((175, 10), (325, 30), width=4, outline='green')
-        can.create_text((250, 20), text=" Lancement de l'application ")
-        can.create_line((250, 30), (250, 45), fill='green', arrow='last',
-                        width=4)
         can.create_rectangle((175, 45), (325, 65), width=4, outline='green')
         can.create_text((250, 55), text="Connexion à MySQL")
         can.create_line((250, 65), (250, 80), fill='green', arrow='last',
@@ -85,9 +87,9 @@ class ViewSteps:
             can.itemconfig(rect_no_connect_mysql, outline='red', width=4)
             # create a button for back to the start view to create a demo user
             text = "Retour vers accueil pour la création d'un utilisateur demo"
-            self.manage_view.create_button(
-                self.frame_steps, text, self.back_start_for_create_user,
-                font=("Arial", 12), row=3)
+            self.create_button(self.frame_steps, text,
+                               self.back_start_for_create_user,
+                               font=("Arial", 12), row=3)
 
     def back_start_for_create_user(self):
         self.frame_steps.destroy()
@@ -155,7 +157,8 @@ class ViewSteps:
             can.itemconfig(arrow_under_rect_create_db, fill='green', width=4)
             can.itemconfig(polygon_3, outline='green', width=4)
             # Creating database 'Pur_Beurre'
-            create_db = self.controller.create_db()
+
+            create_db = self.controller.create_database()
             if create_db:
                 # Shows the steps in green on the flow diagram
                 can.itemconfig(arrow_yes_3, fill='green', width=4)
@@ -163,14 +166,14 @@ class ViewSteps:
                 can.itemconfig(line_above_yes3, fill='green', width=4)
                 can.itemconfig(arrow_under_yes3, fill='green', width=4)
                 # Connection to the 'Pur_Beurre' database
-                self.controller.connect_to_db(can)
+                self.create_widgets_connect_db(can, connect_db=True)
             else:
                 # Shows the steps in red on the flow diagram
                 can.itemconfig(arrow_no_3, fill='red', width=4)
                 can.itemconfig(rect_no3, outline='red', width=4)
                 can.itemconfig(arrow_under_no3, fill='red', width=4)
                 can.itemconfig(failed_creation_db, outline='red', width=4)
-                # Open messagebox
+                # Open message box
                 messagebox.showerror(
                     "Erreur lors de la création de la base de données",
                     "Vous devez créer la base de données manuellement")
@@ -187,20 +190,20 @@ class ViewSteps:
         self.frame_steps.destroy()
 
     def create_widgets_presence_data(self, can, presence_data):
-        arrow_yes_4 = can.create_line((160, 440), (175, 440), arrow='first')
-        rect_yes4 = can.create_rectangle((110, 430), (160, 450))
-        can.create_text((135, 440), text='OUI')
-        arrow_under_yes4 = can.create_line((135, 450), (135, 465),
+        arrow_yes_4 = can.create_line((150, 440), (165, 440), arrow='first')
+        rect_yes4 = can.create_rectangle((100, 430), (150, 450))
+        can.create_text((125, 440), text='OUI')
+        arrow_under_yes4 = can.create_line((125, 450), (125, 465),
                                            arrow='last')
-        rect_login = can.create_rectangle((100, 465), (170, 485))
-        can.create_text((135, 475), text='Se connecter')
-        arrow_no_4 = can.create_line((275, 440), (290, 440), arrow='last')
-        rect_no4 = can.create_rectangle((290, 430), (340, 450))
-        can.create_text((315, 440), text='NON')
-        arrow_under_no4 = can.create_line((315, 450), (315, 460), arrow='last')
-        rect_download_data = can.create_rectangle((240, 460), (390, 500))
-        can.create_text((315, 470), text='Chargement des données')
-        can.create_text((315, 490), text='avant connexion')
+        rect_login = can.create_rectangle((90, 465), (160, 485))
+        can.create_text((125, 475), text='Se connecter')
+        arrow_no_4 = can.create_line((265, 440), (280, 440), arrow='last')
+        rect_no4 = can.create_rectangle((280, 430), (330, 450))
+        can.create_text((305, 440), text='NON')
+        arrow_under_no4 = can.create_line((305, 450), (305, 460), arrow='last')
+        rect_download_data = can.create_rectangle((230, 460), (380, 500))
+        can.create_text((305, 470), text='Chargement des données')
+        can.create_text((305, 490), text='avant connexion')
         # Search presence API data in the 'Pur_Beurre' database
         if presence_data:
             can.itemconfig(arrow_yes_4, fill='green', width=4)
@@ -208,7 +211,7 @@ class ViewSteps:
             can.itemconfig(arrow_under_yes4, fill='green', width=4)
             can.itemconfig(rect_login, outline='green', width=4)
             text_login = "Se connecter"
-            self.manage_view.create_button(
+            self.create_button(
                 self.frame_steps, text_login, self.user_click_on_login_button,
                 font=("Arial", 12), row=3)
         else:
@@ -217,7 +220,7 @@ class ViewSteps:
             can.itemconfig(arrow_under_no4, fill='green', width=4)
             can.itemconfig(rect_download_data, outline='green', width=4)
             text = "Chargement des données de l'API avant connexion"
-            self.manage_view.create_button(
+            self.create_button(
                 self.frame_steps, text, self.user_click_on_download_button,
                 font=("Arial", 12), row=3)
         # self.controller.search_presence_api_data_in_db(can)
@@ -227,5 +230,3 @@ class ViewSteps:
         self.create_frame_steps()
         can = self.create_widgets()
         self.controller.connect_to_mysql(can)
-
-

@@ -1,5 +1,12 @@
-from controller.manage_controller import ManageController
+#! /usr/bin/env python3
+# coding: utf-8
+from controller.controller import Controller
 
-start = ManageController()
-start.starting()
-start.view.root.mainloop()
+
+def main():
+    start = Controller()
+    start.starting()
+    
+    
+if __name__ == "__main__":
+    main()

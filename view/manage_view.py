@@ -1,35 +1,29 @@
-from tkinter import Tk, Frame, Label, Entry, Text, Button, StringVar, Canvas
+from tkinter import (Tk, Frame, Label, Entry, Text, Button, StringVar, Canvas,
+                     PhotoImage, Scrollbar)
 from tkinter.ttk import Combobox
 
 
 class ManageView:
     """ This class is responsible for:
+        - create methods for widgets that will be used in the apps
         - create the main window
-        - set the window
-        - create methods for widgets that will be used in the apps """
+        - parameter the main window : defining the characteristics
+          of my main window with:
+             - title
+             # icon
+             - size and location
+             - minimum size"""
 
-    def __init__(self):
-        self.root = None
+    root = Tk()
+    root.title("Application Pur Beurre")
+    root.geometry("450x620-20+20")
+    root.minsize(450, 600)
+    root['bg'] = 'white'
 
-    def create_root(self):
-        """ This method creates the main window"""
-        self.root = Tk()
-
-    def parameter_root(self):
-        """ this method is responsible for defining the characteristics
-                of my main window with:
-                - title
-                # icon
-                - size and location
-                - minimum size"""
-        self.root.title("Application Pur Beurre")
-        self.root.geometry("450x620-20+20")
-        self.root.minsize(450, 600)
-        self.root['bg'] = 'white'
 
     @staticmethod
-    def create_frame(master, bg='white', row=0, col=0, sticky='nesw',
-                     padx=20, pady=20):
+    def create_frame(master='master', bg='white', row=0, col=0,
+                     sticky='nesw', padx=20, pady=20):
         """ This method creates a tkinter frame widgets.
             :param master: Tk (the parent window)
             :param bg: String (background color)
@@ -38,7 +32,7 @@ class ManageView:
             :param sticky : String (placement in the cell)
             :param padx : Integer (horizontal outer margin)
             :param pady : Integer (vertical outer margin) """
-        frame = Frame(master, bg=bg)
+        frame = Frame(master=master, bg=bg)
         frame.grid(row=row, column=col, sticky=sticky, padx=padx, pady=pady)
         return frame
 
@@ -104,6 +98,13 @@ class ManageView:
                     width=width, wrap=wrap, padx=padx, pady=pady)
         text.grid(row=row, column=col, sticky=sticky)
         return text
+    # cell_s = scrolledtext.ScrolledText(
+    #                     self.frame_info, bg="white", bd=2, font=("Arial", 8),
+    #                     fg='black', width=57, height=1, wrap='word')
+    # cell_s.tag_config(1)
+    # cell = Text(self.frame_info, bg="white", bd=2,
+    #                             font=("Arial", 8), fg='black', width=60,
+    #                             height=1, wrap='word')
 
     @staticmethod
     def create_button(master, text, command, font=("Arial", 20), bg='#ADD0EC',
@@ -140,7 +141,7 @@ class ManageView:
             :param pady: Int (vertical outer margin)
                     """
         control_variable = StringVar()
-        combo = Combobox(master, height=40,
+        combo = Combobox(master, height=20,
                          textvariable=control_variable, width=40)
         combo.grid(row=row, column=col, sticky=sticky, padx=padx, pady=pady)
         combo['values'] = values_list  # Values list
@@ -175,3 +176,58 @@ class ManageView:
         canvas = Canvas(master, bg=bg, width=width, height=height)
         canvas.grid(row=row, column=col, sticky=sticky, padx=padx, pady=pady)
         return canvas
+
+    @staticmethod
+    def create_photo_image(file_path):
+        global photo
+        photo = PhotoImage(file=file_path)
+        return photo
+
+    @staticmethod  # for Button, label
+    def widget_image(widget, logo='photo'):
+        widget['image'] = logo
+
+    @staticmethod
+    def canvas_create_image(canvas, x_img=0, y_img=0, anchor='nw',
+                            logo='photo'):
+        canvas.create_image(x=x_img, y=y_img, anchor=anchor, image=logo)
+
+    @staticmethod
+    def canvas_create_rect(canvas, x0=0, y0=0, x1=10, y1=10, w=1,
+                           color_line='black'):
+        rect = canvas.create_rectangle((x0, y0), (x1, y1), width=w,
+                                       outline=color_line)
+        return rect
+
+    @staticmethod
+    def canvas_create_text(canvas, x=0, y=0, text=""):
+        text = canvas.create_text((x, y), text=text)
+        return text
+
+    @staticmethod
+    def canvas_create_rect_with_text(canvas, x0=0, y0=0, x1=10, y1=10, w=1,
+                                     color_line='black', text=""):
+        rect = canvas.create_rectangle((x0, y0), (x1, y1), width=w,
+                                       outline=color_line)
+        canvas.create_text(((x1-x0)/2+x0, (y1-y0)/2+y0), text=text)
+        return rect
+
+    @staticmethod
+    def canvas_create_line(canvas, x0=0, y0=0, x1=10, y1=10, fill='black',
+                           arrow=None, width=2):
+        canvas.create_line((x0, y0), (x1, y1), fill=fill, arrow=arrow,
+                           width=width)
+
+    @staticmethod
+    def create_x_scrollbar(master, widget, row=2, col=0):
+        x_scrollbar = Scrollbar(master, orient='horizontal')
+        x_scrollbar.config(command=widget.xview)
+        x_scrollbar.grid(row=row, column=col, sticky='ew')
+        widget['xscrollcommand'] = x_scrollbar.set
+
+    @staticmethod
+    def create_y_scrollbar(master, widget, row=1, col=1):
+        y_scrollbar = Scrollbar(master, orient='vertical')
+        y_scrollbar.config(command=widget.yview)
+        y_scrollbar.grid(row=row, column=col, sticky='ns')
+        widget['yscrollcommand'] = y_scrollbar.set

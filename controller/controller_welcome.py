@@ -20,5 +20,4 @@ class ControllerWelcome:
         self.controller.cont_cat.show_select_cat_view(self.controller.pseudo)
 
     def review_substitute(self):
-        # self.controller.cont_sub.show_sub_view()
-        pass
+        self.controller.cont_food.show_sub_view()
