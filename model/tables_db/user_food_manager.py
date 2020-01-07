@@ -81,11 +81,11 @@ class UserFoodManager:
         query = ("SELECT * FROM user_food_substitute "
                  "WHERE user_id = %s and food_id = %s and substitute_id = %s")
         # Execute SELECT statement (SQL)
-        cursor.execute(query, (user_id[0], food_id[0], substitute_id[0]))
+        cursor.execute(query, (user_id, food_id[0], substitute_id[0]))
         rows = cursor.fetchall()
         if not rows:
             cursor.close()
-            self.create_user_food_substitute(user_id[0], food_id[0],
+            self.create_user_food_substitute(user_id, food_id[0],
                                              substitute_id[0])
             return
         else:

@@ -132,7 +132,7 @@ class FoodManager:
         return presence_data
 
     def get_id(self, name_food):
-
+        """ This method searches for the id of the food from its name"""
         # Storage of the SELECT statement (SQL) in a variable
         cursor = self.cnx.cursor()
         query = ("SELECT id_food FROM food "
@@ -147,6 +147,23 @@ class FoodManager:
                 self.table.id_food = str(row[0])
         cursor.close()
         return self.table.id_food
+
+    def get_name(self, id_food):
+        """ This method searches for the name of the food from its id"""
+        # Storage of the SELECT statement (SQL) in a variable
+        cursor = self.cnx.cursor()
+        query = ("SELECT name_food FROM food "
+                 "WHERE id_food = %s")
+        # Execute SELECT statement (SQL)
+        cursor.execute(query, (id_food,))
+        rows = cursor.fetchall()
+        if not rows:
+            return
+        else:
+            for row in rows:
+                self.table.name = str(row[0])
+        cursor.close()
+        return self.table.name
 
     def search_if_food_exist(self, code):
         """ This function search if the food already exists in the database"""

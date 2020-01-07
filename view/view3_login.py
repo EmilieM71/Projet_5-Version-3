@@ -54,6 +54,7 @@ class ViewLogin(ManageView):
 
         # Else (user exist)  open view pur Beurre welcome
         else:
+            self.frame_login.destroy()
             self.controller.choice_welcome()
 
     @staticmethod
@@ -115,6 +116,7 @@ class ViewLogin(ManageView):
             self.e_password2.delete(0, 255)
         # Else create a new user
         else:
+            self.frame_login.destroy()
             self.controller.create_user(pseudo2, password, email)
 
     def create_widgets(self):

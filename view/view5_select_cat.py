@@ -22,6 +22,7 @@ class ViewSelectCat(ManageView):
         return self.selected_category
 
     def validate_category(self):
+        self.frame_cat.destroy()
         self.controller.get_id_selected_category(self.selected_category)
 
     def create_widgets(self, pseudo):

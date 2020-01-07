@@ -24,15 +24,48 @@ class ViewSelectFood(ManageView):
 
         self.frame_info = None
 
-    def create_frame_cat(self):
+        self.combo_food_sub = None
+
+    def create_frame_food(self):
         """ This method creates a frame in the window """
         self.frame_food = self.create_frame(self.root, padx=5)
 
     def back_to_the_menu(self):
+        self.frame_info.destroy()
+        self.frame_food.destroy()
         self.controller.back_to_the_menu()
 
     def back_choice_cat(self):
+        self.frame_food.destroy()
         self.controller.back_to_select_cat(self.controller.controller.pseudo)
+
+    def show_sub_view(self, list_food_sub):
+        self.create_frame_food()
+        # title line 1
+        title_text = " BIENVENUE {} ".format(
+            self.controller.controller.info_user[1])
+        self.create_label(self.frame_food, text=title_text, font=("Arial", 15),
+                          fg="#ADD0EC", sticky='n', pady=5)
+
+        # create title line 2
+        self.create_label(self.frame_food, text="RECHERCHE D'UN SUBSTITUE",
+                          font=("Arial", 15), fg="#ADD0EC", row=1, pady=2)
+
+        # Create Button Back to the menu
+        self.create_button(self.frame_food, "MENU", self.back_to_the_menu,
+                           font=("Arial", 14), row=1, sticky='e', pady=20)
+
+        self.create_line(self.frame_food, 2)  # create line
+
+        # create subtitle : Select a sub
+        self.label_select_food = self.create_label(
+            self.frame_food, text="Sélectionner une recherche : ",
+            fg='#ADD0EC', row=3, pady=20)
+
+        # Create combobox food
+        self.combo_food_sub = self.create_combobox(
+            self.frame_food, list_food_sub, self.see_choice_user_food_sub,
+            row=4, sticky='w', padx=20)
 
     def recovers_categories(self, info_food):
         # Insert categories into the list_info_food
@@ -216,6 +249,7 @@ class ViewSelectFood(ManageView):
 
     def save_research(self):
         # back to the controller
+        self.frame_food.destroy()
         self.controller.save_research(self.info_food, self.info_sub)
         self.root.geometry("450x620-20+20")
         self.back_to_the_menu()
@@ -231,6 +265,22 @@ class ViewSelectFood(ManageView):
         self.create_button(self.frame_food, "Enregistrer", self.save_research,
                            font=("Arial", 15), row=11, sticky='e', pady=20)
         return self.selected_sub
+
+    def see_choice_user_food_sub(self, event):
+        selected_research = self.combo_food_sub.get()
+        start_food = selected_research.index("{") + 1
+        end_food = selected_research.index("}")
+        name_food = selected_research[start_food:end_food]
+        selected_sub = selected_research[end_food+1:]
+
+        start_sub = selected_sub.index("{") + 1
+        end_sub = selected_sub.index("}")
+        name_sub = selected_sub[start_sub:end_sub]
+        id_food = self.controller.displays_food_information(name_food)
+        id_sub = self.controller.displays_food_information(name_sub)
+        info_food = self.controller.recover_info_food(id_food)
+        info_sub = self.controller.recover_info_food(id_sub)
+        self.create_news_widgets(info_food, info_sub)
 
     def see_choice_user_food(self, event):
         # get name selected food
@@ -262,7 +312,8 @@ class ViewSelectFood(ManageView):
         """ This method creates the widgets that will be in the frame. """
         self.list_food = list_food
         # title line 1
-        title_text = " BIENVENUE {} ".format(self.controller.controller.pseudo)
+        title_text = " BIENVENUE {} ".format(
+            self.controller.controller.info_user[1])
         self.create_label(self.frame_food, text=title_text, font=("Arial", 15),
                           fg="#ADD0EC", sticky='ns', pady=5)
 
@@ -300,5 +351,5 @@ class ViewSelectFood(ManageView):
 
     def open_view_select_food(self, cat, list_food):
         """ This method opens the view """
-        self.create_frame_cat()
+        self.create_frame_food()
         self.create_widgets(cat, list_food)

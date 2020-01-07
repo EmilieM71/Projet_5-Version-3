@@ -37,4 +37,4 @@ class ControllerUser:
         return self.info_user
 
     def choice_welcome(self):
-        self.controller.cont_welcome.show_welcome_view(self.info_user)
+        self.controller.cont_welcome.show_welcome_view()

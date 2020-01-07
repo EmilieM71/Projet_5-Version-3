@@ -12,12 +12,11 @@ class ControllerWelcome:
         self.controller = cont
         self.view = ViewWelcome(self)
 
-    def show_welcome_view(self, pseudo):
-        self.controller.pseudo = pseudo
+    def show_welcome_view(self):
         self.view.open_view_welcome()
 
     def find_substitute(self):
-        self.controller.cont_cat.show_select_cat_view(self.controller.pseudo)
+        self.controller.cont_cat.show_select_cat_view()
 
     def review_substitute(self):
         self.controller.cont_food.show_sub_view()
