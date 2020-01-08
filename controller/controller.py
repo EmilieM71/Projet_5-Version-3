@@ -8,9 +8,9 @@ class Controller:
 
     def starting(self):
         """ This method is responsible for display start view"""
-        self.display_start_view()
+        self.go_to_controller_start()
 
-    def display_start_view(self):
+    def go_to_controller_start(self):
         self.controller.cont_start.shows_start_view()
 
     # def display_steps_view(self):

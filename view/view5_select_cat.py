@@ -5,6 +5,10 @@ from config import CATEGORY
 class ViewSelectCat(ManageView):
 
     def __init__(self, cont):
+        """
+
+        :param cont: ControllerCategory
+        """
         self.controller = cont
         self.frame_cat = None
         self.combo = None

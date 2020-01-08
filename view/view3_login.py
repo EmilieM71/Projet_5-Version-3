@@ -7,6 +7,9 @@ import hashlib
 class ViewLogin(ManageView):
 
     def __init__(self, cont):
+        """
+        :param cont: ControllerUser
+        """
         self.controller = cont
         self.frame_login = None
         # Entry for login
@@ -127,8 +130,6 @@ class ViewLogin(ManageView):
         self.create_line(self.frame_login, 1)  # create line
 
         # message
-        # label : master, text="text", font=("Arial", 8), bg="white",
-        # fg='black', row=0, col=0, sticky='w', padx=0, pady=0
         self.message = self.create_label(
             self.frame_login, text=None, font=("Arial", 15), row=2,
             sticky='ns', padx=20, pady=5)

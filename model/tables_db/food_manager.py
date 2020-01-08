@@ -194,21 +194,6 @@ class FoodManager:
         cursor.close()
         return list_name_food
 
-    # def substitute_research(self, list_name_food):
-    #     cursor = self.cnx.cursor()
-    #     list_substitute = []
-    #     for name_food in list_name_food:
-    #         # Storage of the SELECT statement (SQL) in a variable
-    #         query = ("SELECT * FROM food "
-    #                  "WHERE name = %s and nutriscore = 'a' ")
-    #         # Execute SELECT statement (SQL)
-    #         cursor.execute(query, (name_food,))
-    #         rows = cursor.fetchall()
-    #         if rows:
-    #             list_substitute.append(rows)
-    #     cursor.close()
-    #     return list_substitute
-
     def substitute_research(self, id_cat, nutriscore, score_nutri, nova):
         cursor = self.cnx.cursor()
         query = ("SELECT * FROM food "

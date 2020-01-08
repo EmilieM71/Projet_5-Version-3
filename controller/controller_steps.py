@@ -39,15 +39,14 @@ class ControllerSteps:
         create_db = self.create_db.create_db_with_file()
         return create_db
 
+    def return_to_the_start_view(self):
+        self.cont.cont_start.create_db()
+
     def search_presence_api_data_in_db(self, can):
         self.create_db.connection_db(cursor=None)
         presence_data = self.model.search_presence_api_data_in_database()
         self.view.create_widgets_presence_data(can, presence_data)
 
-    # @classmethod
-    # def return_to_the_start_view(cls):
-    #     ManageController.cont_start.create_db()
-    #
     def login(self):
         self.cont.cont_user.show_user_view()
 

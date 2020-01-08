@@ -78,8 +78,9 @@ class CreateDatabase:
             logging.INFO("The {} database is created".format(DB_NAME))
 
         except connector.Error as err:
-            logging.INFO("Failed creating database, error : {}".format(err))
             self.create_database()
+            logging.INFO("Failed creating database, error : {}".format(err))
+
 
         finally:
             cursor.close()

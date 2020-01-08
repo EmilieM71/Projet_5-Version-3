@@ -2,12 +2,14 @@ import re
 
 
 class CleanData:
+    """ This class cleans up data downloaded from the OpenFoodFacts API """
 
     def __init__(self):
         self.all_products = []
 
     @staticmethod
     def deletion_of_duplicates(string_el):
+        """ This method removes duplicates """
         # Transforming the string into a list
         list_el = string_el.split(',')
         # suppression of duplicates
@@ -18,22 +20,33 @@ class CleanData:
 
     @staticmethod
     def add_name_in_food_dict(food_dict, food):
+        """ This method add name in food_dict """
         # Add 'name' value in the food dictionary
         name = food_dict.get("product_name_fr", None)
         if name is None or name == "":
             name = food_dict.get('generic_name_fr', None)
+        if name is None or name == "":
+            name = food_dict.get('product_name', None)
+        if name is None or name == "":
+            name = food_dict.get('generic_name', None)
         if name is not None:
             regex = re.compile(r'[\n\r\t]')
             name = regex.sub(" ", name)
-            quantity = food_dict.get('quantity')
-            if quantity:
-                food["name"] = name + " - " + quantity
-            else:
-                food["name"] = name
+        quantity = food_dict.get('quantity')
+        if name is None:
+            name = "?"
+        if quantity:
+            food["name"] = name + " - " + quantity
+        else:
+            food["name"] = name
+        if name is None:
+            print("pas de nom")
         return food
 
     @staticmethod
     def check_palm_oil_and_add_food_dict(food):
+        """ This method check presence of palm oil and add palm_oil in
+        food_dict """
         # check for palm oil and add 'palm_oil' value in the food dict
         if food["ingredient"] is not None:
             palm = food["ingredient"].find("palm")
@@ -41,10 +54,15 @@ class CleanData:
                 food["palm_oil"] = "peut contenir de l'huile de palme"
             else:
                 food["palm_oil"] = "Non"
+        else:
+            food["palm_oil"] = "peut contenir de l'huile de palme"
+
         return food
 
     @staticmethod
     def research_and_add_nutritional_information(food_dict, food):
+        """ This method research and add nutritional_information in
+        food_dict """
         nutritional_info = food_dict.get('nutriments', None)
         if nutritional_info is not None:
             food["energy_100g"] = nutritional_info.get('energy_100g', None)

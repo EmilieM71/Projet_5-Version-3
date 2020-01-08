@@ -19,7 +19,8 @@ class CategoryManager:
     @staticmethod
     def create_category_table(cursor):
         """ This method creates the category table in the database """
-        table_description = ("CREATE TABLE category ("
+        table_description = ("DROP TABLE category IF EXIST;"
+                             "CREATE TABLE category ("
                              "id_cat INTEGER AUTO_INCREMENT NOT NULL, "
                              "name_cat VARCHAR(255) NOT NULL, "
                              "CONSTRAINT category_pk PRIMARY KEY (id_cat)"

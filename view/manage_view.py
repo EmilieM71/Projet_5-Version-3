@@ -98,13 +98,6 @@ class ManageView:
                     width=width, wrap=wrap, padx=padx, pady=pady)
         text.grid(row=row, column=col, sticky=sticky)
         return text
-    # cell_s = scrolledtext.ScrolledText(
-    #                     self.frame_info, bg="white", bd=2, font=("Arial", 8),
-    #                     fg='black', width=57, height=1, wrap='word')
-    # cell_s.tag_config(1)
-    # cell = Text(self.frame_info, bg="white", bd=2,
-    #                             font=("Arial", 8), fg='black', width=60,
-    #                             height=1, wrap='word')
 
     @staticmethod
     def create_button(master, text, command, font=("Arial", 20), bg='#ADD0EC',

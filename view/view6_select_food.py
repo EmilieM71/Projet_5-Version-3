@@ -5,8 +5,13 @@ import webbrowser
 
 
 class ViewSelectFood(ManageView):
+    """ This class displays the elements of the 'food' view"""
 
     def __init__(self, cont):
+        """
+
+        :param cont: ControllerFood
+        """
         self.controller = cont
 
         self.list_food = None
@@ -31,15 +36,19 @@ class ViewSelectFood(ManageView):
         self.frame_food = self.create_frame(self.root, padx=5)
 
     def back_to_the_menu(self):
+        """ this method go back to the welcome view : the menu of
+        application """
         self.frame_info.destroy()
         self.frame_food.destroy()
         self.controller.back_to_the_menu()
 
     def back_choice_cat(self):
+        """ this method go back to the selected category view """
         self.frame_food.destroy()
-        self.controller.back_to_select_cat(self.controller.controller.pseudo)
+        self.controller.back_to_select_cat()
 
     def show_sub_view(self, list_food_sub):
+        """ this méthod display substitute view """
         self.create_frame_food()
         # title line 1
         title_text = " BIENVENUE {} ".format(
@@ -48,7 +57,7 @@ class ViewSelectFood(ManageView):
                           fg="#ADD0EC", sticky='n', pady=5)
 
         # create title line 2
-        self.create_label(self.frame_food, text="RECHERCHE D'UN SUBSTITUE",
+        self.create_label(self.frame_food, text="VOIR VOS SUBSTITUTS",
                           font=("Arial", 15), fg="#ADD0EC", row=1, pady=2)
 
         # Create Button Back to the menu
@@ -68,6 +77,7 @@ class ViewSelectFood(ManageView):
             row=4, sticky='w', padx=20)
 
     def recovers_categories(self, info_food):
+        """ This method recovers categories with id-food """
         # Insert categories into the list_info_food
         # in table category_food get the list_id_cat
         list_id_cat = self.controller.recover_list_of_id_cat(info_food[0])
@@ -81,6 +91,7 @@ class ViewSelectFood(ManageView):
         return cat
 
     def recovers_stores(self, id_food, list_info_food):
+        """ This method recovers stores with id-food """
         # Insert store into the list_info_food
         # In table store_food recover id_store_list
         store_list = self.controller.recover_store_name_list(id_food)
@@ -97,6 +108,7 @@ class ViewSelectFood(ManageView):
         return list_info_food
 
     def recovers_brand(self, id_food, list_info_food):
+        """ This method recovers brands with id-food """
         # Insert brand into the list_info_food
         # In brand_food table recover id_brand_list
         brand_list = self.controller.recover_brand_name_list(id_food)
@@ -113,7 +125,7 @@ class ViewSelectFood(ManageView):
         return list_info_food
 
     def display_food_information_in_array(self, list_info_food, list_info_sub):
-
+        """ this method display food information in an array """
         list_data_col = [ARRAY_LINE_REF, list_info_food]
         if list_info_sub is not None:
             list_data_col.append(list_info_sub)
@@ -213,13 +225,12 @@ class ViewSelectFood(ManageView):
         self.frame_info.grid(row=0, column=1, rowspan=20)
 
     def create_news_widgets(self, info_food, info_sub):
-        """
-
+        """ This method retrieves information about a food from the database
         :param info_food: list
         :param info_sub: list
         """
         list_info_food = ["ALIMENT"]
-        list_info_sub = ["SUBSTITUTE"]
+        list_info_sub = ["SUBSTITUT"]
 
         list_info_food.extend(info_food)
         # Insert categories into the list_info_food
@@ -248,6 +259,8 @@ class ViewSelectFood(ManageView):
         self.display_food_information_in_array(list_info_food, list_info_sub)
 
     def save_research(self):
+        """ this method save the research in database and go back in the
+        menu """
         # back to the controller
         self.frame_food.destroy()
         self.controller.save_research(self.info_food, self.info_sub)
@@ -255,6 +268,8 @@ class ViewSelectFood(ManageView):
         self.back_to_the_menu()
 
     def see_choice_user_sub(self, event):
+        """ This method displays information about the selected research (food
+        and substitute """
         selected_substitute = str(self.combo_sub.get())
         # # display substitute information
         id_food = self.controller.displays_food_information(
@@ -267,6 +282,7 @@ class ViewSelectFood(ManageView):
         return self.selected_sub
 
     def see_choice_user_food_sub(self, event):
+        """ This method displays information about the selected substitute """
         selected_research = self.combo_food_sub.get()
         start_food = selected_research.index("{") + 1
         end_food = selected_research.index("}")
@@ -283,19 +299,19 @@ class ViewSelectFood(ManageView):
         self.create_news_widgets(info_food, info_sub)
 
     def see_choice_user_food(self, event):
+        """ This method displays information about the selected food """
         # get name selected food
         selected_food = str(self.combo_food.get())
         # display food information
         id_food = self.controller.displays_food_information(
             selected_food)
         self.info_food = self.controller.recover_info_food(id_food)
-        print(self.info_food)
         self.create_news_widgets(self.info_food, info_sub=None)
         # display widgets for select substitute
         self.create_line(self.frame_food, 7)  # create line
         #   create label : Select a substitute
         self.label_select_sub = self.create_label(
-            self.frame_food, text=" Selectionner un substitue: : ",
+            self.frame_food, text=" Selectionner un substitut: : ",
             fg='#ADD0EC', row=8, pady=5)
 
         list_sub = self.controller.substitute_research(
@@ -318,7 +334,7 @@ class ViewSelectFood(ManageView):
                           fg="#ADD0EC", sticky='ns', pady=5)
 
         # create title line 2
-        self.create_label(self.frame_food, text="RECHERCHE D'UN SUBSTITUE",
+        self.create_label(self.frame_food, text="RECHERCHE D'UN SUBSTITUT",
                           font=("Arial", 15), fg="#ADD0EC", row=1, pady=2)
 
         # Create Button Back to the menu

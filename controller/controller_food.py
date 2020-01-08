@@ -36,9 +36,9 @@ class ControllerFood:
         """ This method returns to the menu: welcome view """
         self.controller.cont_welcome.show_welcome_view()
 
-    def back_to_select_cat(self, pseudo):
+    def back_to_select_cat(self):
         """ This method returns to the selected category view """
-        self.controller.cont_cat.show_select_cat_view(pseudo)
+        self.controller.cont_cat.show_select_cat_view()
 
     def recover_info_food(self, id_food):
         """ this method recover food information"""

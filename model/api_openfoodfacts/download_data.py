@@ -3,6 +3,7 @@ from model.api_openfoodfacts.clean_data_api import CleanData
 
 
 class DownloadData:
+    """ This class downloads data from the OpenfoodFacts API """
 
     def __init__(self):
         self.all_products = []

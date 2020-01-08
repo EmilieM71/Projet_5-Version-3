@@ -48,10 +48,10 @@ class StoreManager:
         data_store = (name_store,)
         # 1.4- Insert new store
         cursor.execute(add_store, data_store)
-        # 1.5- Recover the Id from the instance created
-        self.table.store_id = self.get_id(name_store)
-        # 1.6- Make sure data is committed
+        # 1.5- Make sure data is committed
         self.cnx.commit()
+        # 1.6- Recover the Id from the instance created
+        self.table.store_id = self.get_id(name_store)
         # 1.7- Close cursor object
         cursor.close()
         # 1.8- Returns the ID value of the created store
@@ -76,13 +76,13 @@ class StoreManager:
             cursor.close()
             return self.table.store_id
 
-    def get_name_store(self, id_store):
+    def get_id(self, name_store):
         cursor = self.cnx.cursor()
         # Storage of the SELECT statement (SQL) in a variable
-        query = ("SELECT name_store FROM store "
-                 "WHERE id_store = %s")
+        query = ("SELECT id_store FROM store "
+                 "WHERE name_store = %s")
         # Execute SELECT statement (SQL)
-        cursor.execute(query, (id_store,))
+        cursor.execute(query, (name_store,))
         rows = cursor.fetchall()
         if not rows:
             cursor.close()

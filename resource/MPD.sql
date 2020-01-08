@@ -37,7 +37,7 @@ CREATE TABLE food (
                 name_food VARCHAR(500) NOT NULL,
                 nutriscore VARCHAR(1) NOT NULL,
                 url VARCHAR(255),
-                ingredient VARCHAR(2000),
+                ingredient VARCHAR(5000),
                 palm_oil VARCHAR(100),
                 allergen VARCHAR(1000),
                 energy_100g VARCHAR(10),

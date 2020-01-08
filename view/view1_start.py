@@ -10,7 +10,7 @@ class ViewStart(ManageView):
     def __init__(self, cont):
         self.controller = cont
         self.frame_start = None
-        self.create_frame_start()
+        # self.create_frame_start()
         self.widgets = []
 
     def create_frame_start(self):
@@ -55,7 +55,7 @@ class ViewStart(ManageView):
     def user_click_on_ok1_button(self):
         """ This method changes the view when the user clicks the
         'ok' button """
-        new_text = "Vous avez MySQL version 8 installer sur votre ordinateur."
+        new_text = "Vous avez MySQL version 8 installée sur votre ordinateur."
         self.widgets[0].config(text=new_text, fg='gray')
         self.widgets[1].destroy()
         # create text for create user mysql for use the application
@@ -83,7 +83,7 @@ class ViewStart(ManageView):
         text_pma = """
         Et si vous souhaitez utiliser phpMyAdmin : Il faut changer la 
         méthode de chiffrement de l'utilisateur. Connectez en tant que root 
-        au serveur Mysql avec l'interface en ligne de commande. et tapez le 
+        au serveur Mysql avec l'interface en ligne de commande et tapez le 
         script ci dessous : """
         info_user = self.create_label(self.frame_start, text=text_pma, row=8)
         info_user.config(justify='left')

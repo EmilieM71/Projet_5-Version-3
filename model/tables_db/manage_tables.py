@@ -10,10 +10,14 @@ from model.tables_db.user_food_manager import UserFoodManager
 
 
 class ManageTables:
-
-
+    """ This class manages access to the database table management classes. """
 
     def __init__(self, cnx):
+        """ Connection with the MySQL server
+        :param cnx: CMySQL.connection (Connection with the MySQL server can be
+        made using the mysql.connector.connect() method or the
+        mysql.connector.MySQLConnection() class.)
+        """
         self.cnx = cnx
         self._category_manager = None
         self._store_manager = None

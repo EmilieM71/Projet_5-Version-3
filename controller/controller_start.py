@@ -23,6 +23,5 @@ class ControllerStart:
     def show_start_view_user(self):
         self.view.show_start_view_user()
 
-    # @classmethod
-    # def create_db(cls):
-    #     cls.view.create_db()
+    def create_db(self):
+        self.view.create_db()

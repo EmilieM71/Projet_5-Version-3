@@ -32,7 +32,9 @@ class InsertData:
         cursor = self.cnx.cursor()
 
         # Insert data into the corresponding tables
+        i=0
         for product in products:
+            i+=1
             # id_food ,name ,nutriscore, url, ingredient, palm_oil,
             # allergen, energy_100g, energy, fat_100g, saturated_fat_100g,
             # carbohydrates_100g, sugars_100g, proteins_100g, salt_100g,
@@ -41,7 +43,7 @@ class InsertData:
                     or product["name"] is None or (
                     product["nutriscore"] == ""
                     or product["nutriscore"] is None):
-                return
+                continue
             else:
                 # Insert elements in food table
                 self.tables.food_manager.create_food(
@@ -109,6 +111,9 @@ class InsertData:
                             # Insert name in table store
                             id_store = self.tables.store_manager.create_store(
                                 store)
+                            if id_store is None:
+                                id_store = self.tables.store_manager.get_id(
+                                    store)
                             # Insert id_food and id_store in food_store table
                             self.tables.food_store_manager.\
                                 search_if_food_store_exist(id_food, id_store)
