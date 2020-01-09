@@ -8,4 +8,3 @@ Vous devez avoir MySQL installé pour utiliser cette application
 Clonez le repo
 Installer les dépendances (requirements.txt)
 Créer un utilisateur démo ou modifier les éléments de connexion dans le fichier config.
-Renommez le fichier user_config.py dans config.py
