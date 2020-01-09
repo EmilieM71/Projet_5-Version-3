@@ -74,7 +74,7 @@ class ViewSelectFood(ManageView):
         # Create combobox food
         self.combo_food_sub = self.create_combobox(
             self.frame_food, list_food_sub, self.see_choice_user_food_sub,
-            row=4, sticky='w', padx=20)
+            width=55, row=4, sticky='w', padx=20)
 
     def recovers_categories(self, info_food):
         """ This method recovers categories with id-food """

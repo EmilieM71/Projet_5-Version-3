@@ -121,12 +121,13 @@ class ManageView:
         return button
 
     @staticmethod
-    def create_combobox(master, values_list, command, row=0, col=0,
+    def create_combobox(master, values_list, command, width=40, row=0, col=0,
                         sticky='ns', padx=5, pady=5):
         """ This method creates a tkinter combobox widget
             :param master: Tk (the parent window)
             :param values_list: list (value list displayed inside the combobox)
             :param command : func (method to call when you click the button)
+            :param width: Integer (width in number of characters)
             :param row: Integer (line number where the text will be placed)
             :param col: Integer (column number where the label will be placed)
             :param sticky: String (placement in the cell)
@@ -135,7 +136,7 @@ class ManageView:
                     """
         control_variable = StringVar()
         combo = Combobox(master, height=20,
-                         textvariable=control_variable, width=40)
+                         textvariable=control_variable, width=width)
         combo.grid(row=row, column=col, sticky=sticky, padx=padx, pady=pady)
         combo['values'] = values_list  # Values list
         combo.current(0)  # Choosing the current value

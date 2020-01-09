@@ -53,11 +53,11 @@ class ViewWelcome(ManageView):
                           padx=20)
 
         #   1. Find a substitute.
-        self.create_button(self.frame_welcome, "Rechercher un substitue",
+        self.create_button(self.frame_welcome, "Rechercher un substitut",
                            self.find_substitute, row=4, pady=20)
 
         #   2. Review substitutes.
-        self.create_button(self.frame_welcome, "Voir vos substitues",
+        self.create_button(self.frame_welcome, "Voir vos substituts",
                            self.review_substitute, row=5, pady=20)
 
         #   3. Leave
